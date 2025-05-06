@@ -1,4 +1,4 @@
-package controllers;
+package com.example.project.controllers;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
