@@ -1,5 +1,6 @@
-package Entidades;
+package com.example.project.Entidades;
 
+import com.example.project.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
 
