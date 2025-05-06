@@ -1,4 +1,4 @@
-package ai;
+package com.example.project.ai;
 
 import com.azure.ai.inference.ChatCompletionsClient;
 import com.azure.ai.inference.ChatCompletionsClientBuilder;
