@@ -1,5 +1,6 @@
 package com.example.project.Entidades;
 
+import com.example.project.enums.TipoLimite;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class RestriccionEmpresa {
 
     private String modeloIA;
 
-    private String tipoLimite;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoLimite tipoLimite;
 
     private Long valorLimite;
 
