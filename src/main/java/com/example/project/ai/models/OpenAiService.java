@@ -29,30 +29,35 @@ public class OpenAiService {
      * @return La respuesta generada por el modelo
      */
     public String queryChatModel(String query) {
-        // Crear cliente para interactuar con la API de OpenAI
-        ChatCompletionsClient client = new ChatCompletionsClientBuilder()
-                .credential(new AzureKeyCredential(apiKey))  // Autenticación con el token de API
-                .endpoint(endpoint)
-                .buildClient();
+        try {
+            // Crear cliente para interactuar con la API de OpenAI
+            ChatCompletionsClient client = new ChatCompletionsClientBuilder()
+                    .credential(new AzureKeyCredential(apiKey))  // Autenticación con el token de API
+                    .endpoint(endpoint)
+                    .buildClient();
 
-        // Crear los mensajes que se enviarán al modelo
-        List<ChatRequestMessage> chatMessages = Arrays.asList(
-                new ChatRequestSystemMessage("You are a helpful assistant."),  // Mensaje de sistema (contexto)
-                new ChatRequestUserMessage(query)  // Mensaje del usuario (la consulta)
-        );
+            // Crear los mensajes que se enviarán al modelo
+            List<ChatRequestMessage> chatMessages = Arrays.asList(
+                    new ChatRequestSystemMessage("You are a helpful assistant."),  // Mensaje de sistema (contexto)
+                    new ChatRequestUserMessage(query)  // Mensaje del usuario (la consulta)
+            );
 
-        // Configurar las opciones para el modelo de completado
-        ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(chatMessages);
-        chatCompletionsOptions.setModel(model);  // Establecer el modelo de OpenAI
+            // Configurar las opciones para el modelo de completado
+            ChatCompletionsOptions chatCompletionsOptions = new ChatCompletionsOptions(chatMessages);
+            chatCompletionsOptions.setModel(model);  // Establecer el modelo de OpenAI
 
-        // Realizar la consulta al modelo de IA
-        ChatCompletions completions = client.complete(chatCompletionsOptions);
+            // Realizar la consulta al modelo de IA
+            ChatCompletions completions = client.complete(chatCompletionsOptions);
 
-        // Verificar si la respuesta contiene opciones y devolver la primera opción
-        if (completions.getChoices() != null && !completions.getChoices().isEmpty()) {
-            return completions.getChoices().get(0).getMessage().getContent();  // Devuelve el contenido de la respuesta
-        } else {
-            return "No response from the model.";  // Mensaje predeterminado si no hay respuesta
+            // Verificar si la respuesta contiene opciones y devolver la primera opción
+            if (completions.getChoices() != null && !completions.getChoices().isEmpty()) {
+                return completions.getChoices().get(0).getMessage().getContent();  // Devuelve el contenido de la respuesta
+            } else {
+                return "No response from the model.";  // Mensaje predeterminado si no hay respuesta
+            }
+        } catch (Exception e) {
+            // Manejo de excepciones: Si ocurre un error, se captura y se muestra un mensaje de error
+            return "Error while contacting the model: " + e.getMessage();
         }
     }
 }
