@@ -1,4 +1,4 @@
-package com.example.project.dto;
+package com.example.project.dto.empresaDTO;
 
 import com.example.project.enums.TipoLimite;
 import lombok.Builder;
