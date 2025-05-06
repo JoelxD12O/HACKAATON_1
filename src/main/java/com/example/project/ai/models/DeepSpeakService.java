@@ -1,9 +1,8 @@
 package com.example.project.ai.models;
 import org.springframework.stereotype.Service;
-import ai.dto.AIRequestDTO;
 
 @Service
-public class DeepSpeakService implements IAiModelService{
+public abstract class DeepSpeakService implements IAiModelService{
 
     @Override
     public String processPromt(AIRequestDTO request){
@@ -12,7 +11,7 @@ public class DeepSpeakService implements IAiModelService{
 
 
     @Override
-    private String getModelName(){
+    public String getModelName(){
         return "DeepSeek";
     }
 }

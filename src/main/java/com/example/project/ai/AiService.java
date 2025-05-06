@@ -11,8 +11,14 @@ import com.azure.core.credential.AzureKeyCredential;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.example.project.ai.models.IAiModelService;
+import com.example.project.ai.models.AIRequestDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AiService {
@@ -22,6 +28,24 @@ public class AiService {
 
     private String endpoint = "https://models.github.ai/inference";  // Endpoint de GitHub Models
     private String model = "openai/o4-mini";  // Nombre del modelo de OpenAI
+
+    private final Map<String, IAiModelService> modelServices = new HashMap<>();
+
+    @Autowired
+    public AiService(List<IAiModelService> services) {
+        for (IAiModelService service : services) {
+            modelServices.put(service.getModelName(), service);
+        }
+    }
+
+    public String enviarPrompt(String modelName, AIRequestDTO request) {
+        IAiModelService service = modelServices.get(modelName);
+        if (service == null) throw new IllegalArgumentException("Modelo no soportado");
+        return service.processPrompt(request);
+    }
+
+
+
 
     public String queryChatModel(String query) {
         // Crear cliente para interactuar con la API de OpenAI
