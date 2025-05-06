@@ -1,21 +1,29 @@
 package com.example.project.controllers;
 
+import com.example.project.dto.EmpresaConsumoDTO;
+import com.example.project.dto.EmpresaRequestDTO;
+import com.example.project.dto.EmpresaDTO;
+import com.example.project.service.CompanyService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/api/admin/companies")
+@RequiredArgsConstructor
 public class CompanyAdminController {
-    @RestController
-    @RequestMapping("/api/admin/companies")
-    public class CompanyAdminController {
 
-        @PostMapping
-        public ResponseEntity<CompanyResponse> createCompany(@RequestBody CreateCompanyRequest request) {
-            // Lógica para crear empresa + admin
-        }
+    private final CompanyService companyService;
 
-        @GetMapping("/{id}/consumption")
-        public ResponseEntity<CompanyConsumptionResponse> getConsumption(@PathVariable Long id) {
-            // Reporte de consumo
-        }
+    @PostMapping
+    public ResponseEntity<EmpresaDTO> createCompany(@RequestBody EmpresaRequestDTO request) {
+        EmpresaDTO empresa = companyService.crearEmpresa(request);
+        return ResponseEntity.ok(empresa);
     }
 
+    @GetMapping("/{id}/consumption")
+    public ResponseEntity<EmpresaConsumoDTO> getConsumption(@PathVariable Long id) {
+        EmpresaConsumoDTO consumo = companyService.obtenerConsumoEmpresa(id);
+        return ResponseEntity.ok(consumo);
+    }
 }
