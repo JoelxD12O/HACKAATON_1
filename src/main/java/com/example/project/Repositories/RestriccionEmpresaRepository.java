@@ -1,4 +1,7 @@
 package com.example.project.Repositories;
 
-public class RestriccionEmpresaRepository {
+import com.example.project.Entidades.RestriccionEmpresa;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RestriccionEmpresaRepository extends JpaRepository<RestriccionEmpresa, Long> {
 }
