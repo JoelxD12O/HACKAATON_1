@@ -1,6 +1,6 @@
 package com.example.project.ai.models;
 import com.example.project.ai.models.dto.DeepSeekRequestDTO;
-import jakarta.persistence.Column;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ public class DeepSpeakService implements IAiModelService{
 
     private final RestTemplate restTemplate;
 
+    @Autowired
     public DeepSpeakService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
 
     @Override
     public String generateResponse(String prompt) {
