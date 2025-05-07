@@ -25,7 +25,7 @@ public class RestrictionService {
 
         RestriccionEmpresa r = RestriccionEmpresa.builder()
                 .empresa(empresa)
-                .modeloIA(request.getModeloIA())
+                .modelo(request.getModeloIA())
                 .tipoLimite(request.getTipoLimite())
                 .valorLimite(request.getValorLimite())
                 .ventanaTiempo(request.getVentanaTiempo())
@@ -46,7 +46,7 @@ public class RestrictionService {
         RestriccionEmpresa r = restriccionRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Restricción no encontrada"));
 
-        r.setModeloIA(request.getModeloIA());
+        r.setModelo(request.getModeloIA());
         r.setTipoLimite(request.getTipoLimite());
         r.setValorLimite(request.getValorLimite());
         r.setVentanaTiempo(request.getVentanaTiempo());
@@ -62,7 +62,7 @@ public class RestrictionService {
     private RestriccionEmpresaDTO toDTO(RestriccionEmpresa r) {
         return RestriccionEmpresaDTO.builder()
                 .id(r.getId())
-                .modeloIA(r.getModeloIA())
+                .modeloIA(r.getModelo())
                 .tipoLimite(r.getTipoLimite())
                 .valorLimite(r.getValorLimite())
                 .ventanaTiempo(r.getVentanaTiempo())
