@@ -1,6 +1,8 @@
 package com.example.project.ai.models;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
+@Data
 public class AIRequestDTO {
 
     @NotBlank(message = "El prompt no puede estar vacío")

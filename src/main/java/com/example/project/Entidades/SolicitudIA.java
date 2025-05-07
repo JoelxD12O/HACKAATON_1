@@ -1,9 +1,10 @@
 package com.example.project.Entidades;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
+@Data
 @Entity
 public class SolicitudIA {
 
@@ -11,65 +12,18 @@ public class SolicitudIA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String consulta;  // Consulta enviada al modelo de IA
-
-    private String respuesta; // Respuesta del modelo de IA
-
-    private int tokensConsumidos; // Tokens consumidos en la consulta
-
-    private Date fecha; // Fecha de la solicitud
+    private String consulta;
+    private String respuesta;
+    private int tokensConsumidos;
+    private LocalDateTime fecha;
+    private String modelo; // Nuevo
+    private boolean exitosa; // Nuevo
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;  // Relación con el Usuario
+    private Usuario usuario;
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getConsulta() {
-        return consulta;
-    }
-
-    public void setConsulta(String consulta) {
-        this.consulta = consulta;
-    }
-
-    public String getRespuesta() {
-        return respuesta;
-    }
-
-    public void setRespuesta(String respuesta) {
-        this.respuesta = respuesta;
-    }
-
-    public int getTokensConsumidos() {
-        return tokensConsumidos;
-    }
-
-    public void setTokensConsumidos(int tokensConsumidos) {
-        this.tokensConsumidos = tokensConsumidos;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
+    private Empresa empresa; // Nuevo
 }
-

@@ -10,6 +10,7 @@ public interface CompanyService {
     EmpresaDetalleDTO obtenerEmpresaPorId(Long id);
     EmpresaDetalleDTO actualizarEmpresa(Long id, EmpresaUpdateDTO dto);
     void cambiarEstadoEmpresa(Long id, boolean estado);
+    ConsumoEmpresaDTO obtenerConsumoEmpresa(Long empresaId); // Añade esta línea
 
 
 }

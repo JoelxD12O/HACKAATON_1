@@ -1,12 +1,16 @@
 package com.example.project.service;
 
+import com.example.project.Repositories.SolicitudIARepository;
+import com.example.project.Repositories.RestriccionEmpresaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import com.example.project.Entidades.Empresa;
+import com.example.project.Entidades.RestriccionEmpresa;
 import com.example.project.Entidades.Usuario;
 import com.example.project.Repositories.EmpresaRepository;
+import com.example.project.Repositories.SolicitudIARepository;
 import com.example.project.Repositories.UsuarioRepository;
 import com.example.project.dto.*;
 import com.example.project.enums.Rol;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.project.Exceptions.ResourceNotFoundException;
@@ -17,9 +21,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
-
+    private final SolicitudIARepository solicitudIARepository; // Inyección del repositorio
     private final EmpresaRepository empresaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final RestriccionEmpresaRepository restriccionEmpresaRepository;
 
     @Override
     @Transactional
@@ -127,5 +132,55 @@ public class CompanyServiceImpl implements CompanyService {
         // 2. Actualizar solo el estado
         empresa.setActiva(estado);
         empresaRepository.save(empresa);
+    }
+    @Transactional(readOnly = true)
+    public ConsumoEmpresaDTO obtenerConsumoEmpresa(Long empresaId) {
+        // 1. Obtener todas las restricciones (límites por modelo) de la empresa
+        List<RestriccionEmpresa> restricciones = restriccionEmpresaRepository.findByEmpresaId(empresaId);
+
+        // 2. Obtener datos de consumo desde SolicitudIA
+        // CORRECTO (usando la instancia inyectada):
+// CORRECTO (usando la instancia inyectada):
+        List<SolicitudIARepository.ConsumoPorModeloProjection> consumoModelos = solicitudIARepository.findConsumoPorModelo(empresaId); // ✅
+// ✅ CORRECTO: Llamada desde una instancia
+        int totalGastado = solicitudIARepository.sumTokensConsumidosByEmpresa(empresaId);        // 3. Calcular total asignado (suma de todos los límites)
+
+        int totalAsignado = restricciones.stream()
+                .mapToInt(RestriccionEmpresa::getLimiteTokens)
+                .sum();
+
+        // 4. Mapear a DTO
+        List<ConsumoEmpresaDTO.ConsumoModeloDTO> consumoModeloDTOs = restricciones.stream()
+                .map(restriccion -> {
+                    String modelo = restriccion.getModelo();
+
+                    // Buscar consumo para este modelo
+                    int gastado = consumoModelos.stream()
+                            .filter(c -> c.getModelo().equals(modelo))
+                            .findFirst()
+                            .map(SolicitudIARepository.ConsumoPorModeloProjection::getGastado)
+                            .orElse(0);
+
+                    long totalSolicitudes = consumoModelos.stream()
+                            .filter(c -> c.getModelo().equals(modelo))
+                            .findFirst()
+                            .map(SolicitudIARepository.ConsumoPorModeloProjection::getTotalSolicitudes)
+                            .orElse(0L);
+
+                    return ConsumoEmpresaDTO.ConsumoModeloDTO.builder()
+                            .modelo(modelo)
+                            .tokensAsignados(restriccion.getLimiteTokens())
+                            .tokensGastados(gastado)
+                            .totalSolicitudes(totalSolicitudes)
+                            .build();
+                })
+                .toList();
+
+        return ConsumoEmpresaDTO.builder()
+                .totalTokensAsignados(totalAsignado)
+                .totalTokensGastados(totalGastado)
+                .tokensDisponibles(totalAsignado - totalGastado)
+                .consumoPorModelo(consumoModeloDTOs)
+                .build();
     }
 }

@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -16,7 +15,8 @@ public class RestriccionEmpresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modeloIA;
+    private String modelo;//este es el modelo IA
+    private int limiteTokens;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
