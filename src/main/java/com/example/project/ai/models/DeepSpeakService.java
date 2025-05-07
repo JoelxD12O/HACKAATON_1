@@ -1,5 +1,6 @@
 package com.example.project.ai.models;
 import com.example.project.ai.models.dto.DeepSeekRequestDTO;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -7,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public abstract class DeepSpeakService implements IAiModelService{
+public class DeepSpeakService implements IAiModelService{
     @Value("${deepseek.api.key}")
     private String apiKey;
 

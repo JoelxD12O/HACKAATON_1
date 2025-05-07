@@ -1,5 +1,8 @@
 package com.example.project.ai.models.dto;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.Date;
 
 public class SolicitudIADTO {
