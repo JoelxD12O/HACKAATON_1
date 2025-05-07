@@ -52,4 +52,11 @@ public class CompanyAdminController {
     ) {
         companyService.cambiarEstadoEmpresa(id, activa);
     }
+    @GetMapping("/{id}/consumption")
+    //@PreAuthorize("hasRole('ROLE_SPARKY_ADMIN')") // Solo para superadmins
+    public ResponseEntity<ConsumoEmpresaDTO> obtenerConsumoEmpresa(
+            @PathVariable Long id) {
+        ConsumoEmpresaDTO consumo = companyService.obtenerConsumoEmpresa(id);
+        return ResponseEntity.ok(consumo);
+    }
 }
