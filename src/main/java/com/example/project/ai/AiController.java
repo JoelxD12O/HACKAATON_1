@@ -15,4 +15,5 @@ public class AiController {
     public String queryOpenAiChat(@RequestBody String query) {
         return aiService.queryChatModel(query);
     }
+
 }
