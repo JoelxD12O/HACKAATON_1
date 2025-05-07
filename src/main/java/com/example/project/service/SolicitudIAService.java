@@ -7,6 +7,8 @@ import com.example.project.ai.models.dto.SolicitudIADTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +25,7 @@ public class SolicitudIAService {
         solicitudIA.setConsulta(solicitudIADTO.getConsulta());
         solicitudIA.setRespuesta(solicitudIADTO.getRespuesta());
         solicitudIA.setTokensConsumidos(solicitudIADTO.getTokensConsumidos());
-        solicitudIA.setFecha(new Date());
+        solicitudIA.setFecha(LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault()));
 
         // Asumimos que tienes un método para obtener al Usuario
         Usuario usuario = obtenerUsuarioPorId(usuarioId);
@@ -41,7 +43,7 @@ public class SolicitudIAService {
                     dto.setConsulta(solicitud.getConsulta());
                     dto.setRespuesta(solicitud.getRespuesta());
                     dto.setTokensConsumidos(solicitud.getTokensConsumidos());
-                    dto.setFecha(solicitud.getFecha());
+                    dto.setFecha(Date.from(solicitud.getFecha().atZone(ZoneId.systemDefault()).toInstant()));
                     return dto;
                 })
                 .collect(Collectors.toList());
