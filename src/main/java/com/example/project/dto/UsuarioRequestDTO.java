@@ -12,3 +12,4 @@ public class UsuarioRequestDTO {
     private Rol rol;
     private Long empresaId;
 }
+
