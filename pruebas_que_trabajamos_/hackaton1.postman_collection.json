@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "37fa73b7-09b2-472b-a51c-9df5f2651d00",
+		"name": "hackaton1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43499852"
+	},
+	"item": [
+		{
+			"name": "companies",
+			"item": [
+				{
+					"name": "api/admin/companies",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/companies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/admin/companies",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/companies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/admin/companies/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/admin/companies/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"companies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/admin/companies/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Nuevo Nombre S.A.\",\r\n    \"ruc\": \"12345678901\",\r\n    \"activa\": true,\r\n    \"fechaAfiliacion\": \"2023-10-25\",\r\n    \"administradores\": [\r\n        {\r\n            \"id\": 101,\r\n            \"nombreCompleto\": \"Admin Ejemplo\",\r\n            \"email\": \"admin@empresa.com\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/companies/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/admin/companies/id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"nombre\": \"Nuevo Nombre S.A.\",\r\n    \"ruc\": \"12345678901\",\r\n    \"activa\": true,\r\n    \"fechaAfiliacion\": \"2023-10-25\",\r\n    \"administradores\": [\r\n        {\r\n            \"id\": 101,\r\n            \"nombreCompleto\": \"Admin Ejemplo\",\r\n            \"email\": \"admin@empresa.com\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "PATCH /api/admin/companies/1/status?activa=true",
+							"host": [
+								"PATCH "
+							],
+							"path": [
+								"api",
+								"admin",
+								"companies",
+								"1",
+								"status"
+							],
+							"query": [
+								{
+									"key": "activa",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/admin/companies",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"empresaRequest\": {\r\n        \"nombre\": \"Logística Rápida EIRL\",\r\n        \"ruc\": \"20654321987\",\r\n        \"activa\": false\r\n    },\r\n    \"adminRequest\": {\r\n        \"nombreCompleto\": \"Carlos Mendoza\",\r\n        \"email\": \"c.mendoza@logisticarapida.com\",\r\n        \"password\": \"Log1st1c@\",\r\n        \"rol\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/companies",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
