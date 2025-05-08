@@ -1,4 +1,4 @@
-package com.example.githubmodels;
+package com.example.project.ai;
 
 import com.example.project.ai.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
